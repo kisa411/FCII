@@ -1,0 +1,13 @@
+all: rational
+
+rational: main.o rational.o
+	g++ main.o rational.o -o rational
+
+main.o: main_rational.cpp"
+	g++ -c "main_rational.cpp"
+
+rational.o: rational.cpp
+	g++ -c rational.cpp
+
+clean:
+	rm *o rational
