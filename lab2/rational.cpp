@@ -9,38 +9,37 @@ Rational::Rational() { //default constructor
 }
 
 Rational::Rational( int numerator, int denominator ) { //constructor with given numerator and denominator arguments
-	if( num%den == 0 ) { //if the given fraction can be reduced/simplified
-		num = numerator/denominator;
-		den = 1;
+	if( calcGCD( numerator, denominator) != 0 ) { //if the given fraction can be reduced/simplified
+        int GCD = calcGCD( numerator, denominator );
+        //code
 	} else {
-		...
 		num = numerator;
-		den = denominator; //how to print numerator and denominator separately? - maybe need to overload << operator so that it can be something like this: cout << num << '/' << den << endl;
+		den = denominator;
 	}
 }
 
-Rational Rational::add( Rational one ) { //add function, returns a rational 
+Rational Rational::add( Rational fraction ) { //add function, returns a rational
 	Rational number;
 
 	number = one+two;
 	return number;
 }
 
-Rational Rational::subtract( Rational one ) { //subtract function
+Rational Rational::subtract( Rational fraction ) { //subtract function
 	Rational number;
 
 	number = one-two;
 	return number;
 }
 
-Rational Rational::multiply( Rational one ) { //multiply function
+Rational Rational::multiply( Rational fraction ) { //multiply function
 	Rational number;
 
 	number = one*two;
 	return number;
 }
 
-Rational Rational::divide( Rational one ) { //divide function
+Rational Rational::divide( Rational fraction ) { //divide function
 	Rational number;
 
 	number = one/two;
@@ -93,5 +92,19 @@ Rational Rational::operator/( const Rational& one, const Rational& two ) {
 	} else {
 		cout << numerator << '/' << denominator << endl;
 }
+
+int Rational::calcCGD( int numerator, int denominator ) {
+    int tmp;
+    numerator = abs( numerator );
+    denominator = abs( denominator );
+    while (numerator > 0) {
+        tmp = numerator;
+        numerator = denominator % numerator;
+        denominator = tmp;
+    }
+    return denominator;
+}
+
+
 
 
