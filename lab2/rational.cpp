@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "rational.h"
 using namespace std;
 
@@ -9,91 +10,102 @@ Rational::Rational() { //default constructor
 }
 
 Rational::Rational( int numerator, int denominator ) { //constructor with given numerator and denominator arguments
-	if( calcGCD( numerator, denominator) != 0 ) { //if the given fraction can be reduced/simplified
+	if( calcGCD( numerator, denominator) >= 1 ) { //if the given fraction can be reduced/simplified, simplify using GCD
         int GCD = calcGCD( numerator, denominator );
-        //code
+        num = numerator/GCD;
+        den = denominator/GCD;
 	} else {
 		num = numerator;
 		den = denominator;
 	}
 }
 
-Rational Rational::add( Rational fraction ) { //add function, returns a rational
-	Rational number;
-
-	number = one+two;
-	return number;
-}
-
-Rational Rational::subtract( Rational fraction ) { //subtract function
-	Rational number;
-
-	number = one-two;
-	return number;
-}
-
-Rational Rational::multiply( Rational fraction ) { //multiply function
-	Rational number;
-
-	number = one*two;
-	return number;
-}
-
-Rational Rational::divide( Rational fraction ) { //divide function
-	Rational number;
-
-	number = one/two;
-	return number;
-}
-
 //overload << operator - need to make friend function so that it can access private data members even though it's not part of the class itself
-
+ostream &operator<<( ostream& output, Rational& r) { //overload '<<' operator so that you can print out rational numbers
+    output << r.num << "/" << r.den;
+    
+    return output;
+}
 
 //overload + operator
-Rational Rational::operator+( const Rational& one, const Rational& two ) { //& - passes in a reference to the object
-	numerator = (one.num + two.num);
-	denominator = (one.den);
-	if( numerator%denominator == 0 ) { //if the given fraction can be reduced/simplified
-		rational = numerator/denominator;
-		cout << rational << endl;
-	} else {
-		cout << numerator << '/' << denominator << endl;
+Rational Rational::operator+( Rational& two ) { //& - passes in a reference to the object
+	Rational value;
+    
+    value.num = ((num*two.den)+(two.num*den)); //num = numerator of object that the + operator is getting called on
+	value.den = (den*two.den); //den = denominator of object that the + operator is getting called on
+    if( calcGCD( value.num, value.den ) >= 1 ) { //if the given fraction can be reduced/simplified, simplify using GCD
+        int GCD = calcGCD( value.num, value.den );
+        value.num = value.num/GCD;
+        value.den = value.den/GCD;
+        return value;
+    } else {
+        return value;
+    }
 }
 
 //overload - operator
-Rational Rational::operator-( const Rational& one, const Rational& two ) {
-	numerator = (one.num - two.num);
-	denominator = (one.den);
-	if( numerator%denominator == 0 ) { //if the given fraction can be reduced/simplified
-		rational = numerator/denominator;
-		cout << rational << endl;
-	} else {
-		cout << numerator << '/' << denominator << endl;
+Rational Rational::operator-( Rational& two ) {
+    Rational value;
+    
+    value.num = ((num*two.den)-(den*two.num)); //num = numerator of object that the + operator is getting called on
+    value.den = (den*two.den); //den = denominator of object that the + operator is getting called on
+    if( calcGCD( value.num, value.den ) >= 1 ) { //if the given fraction can be reduced/simplified, simplify using GCD
+        int GCD = calcGCD( value.num, value.den );
+        value.num = value.num/GCD;
+        value.den = value.den/GCD;
+        return value;
+    } else {
+        return value;
+    }
 }
 
 //overload * operator
-Rational Rational::operator*( const Rational& one, const Rational& two ) {
-	numerator = (one.num*two.num);
-	denominator = (one.den*two.den);
-	if( numerator%denominator == 0 ) { //if the given fraction can be reduced/simplified
-		rational = numerator/denominator;
-		cout << rational << endl;
-	} else {
-		cout << numerator << '/' << denominator << endl;
+Rational Rational::operator*( Rational& two ) {
+    Rational value;
+    
+    value.num = (num*two.num);
+	value.den = (den*two.den);
+    if( calcGCD( value.num, value.den ) >= 1 ) { //if the given fraction can be reduced/simplified, simplify using GCD
+        int GCD = calcGCD( value.num, value.den );
+        value.num = value.num/GCD;
+        value.den = value.den/GCD;
+        return value;
+    } else {
+        return value;
+    }
 }
 
 //overload / operator
-Rational Rational::operator/( const Rational& one, const Rational& two ) {
-	numerator = (one.num*two.den);
-	denominator = (one.den*two.num);
-	if( numerator%denominator == 0 ) { //if the given fraction can be reduced/simplified
-		rational = numerator/denominator;
-		cout << rational << endl;
-	} else {
-		cout << numerator << '/' << denominator << endl;
+Rational Rational::operator/( Rational& two ) {
+    Rational value;
+    
+    value.num = (num*two.den);
+	value.den = (den*two.num);
+    if( calcGCD( value.num, value.den ) >= 1 ) { //if the given fraction can be reduced/simplified, simplify using GCD
+        int GCD = calcGCD( value.num, value.den );
+        value.num = value.num/GCD;
+        value.den = value.den/GCD;
+        return value;
+    } else {
+        return value;
+    }
 }
 
-int Rational::calcCGD( int numerator, int denominator ) {
+//overload ! operator - gives inverse
+void Rational::operator!() {
+    //Rational value;
+    int temp;
+    
+    temp = num; //put numerator in temporary variable
+    num = den;
+    den = temp;
+//    value.num = den; //set numerator to denominator
+//    value.den = num; //set denominator to temporary variable
+    cout << "The inverse of the specified rational is: " << num << "/" << den << endl;
+    
+}
+    
+int Rational::calcGCD( int numerator, int denominator ) {
     int tmp;
     numerator = abs( numerator );
     denominator = abs( denominator );
@@ -104,6 +116,7 @@ int Rational::calcCGD( int numerator, int denominator ) {
     }
     return denominator;
 }
+
 
 
 
