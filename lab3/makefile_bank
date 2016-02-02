@@ -1,0 +1,19 @@
+all: bankaccount
+
+bankaccount: main_bankaccount.o saving.o loan.o bankaccount.o
+	g++ main_bankaccount.o saving.o loan.o bankaccount.o -o bankaccount
+
+main_bankaccount.o: main_bankaccount.cpp
+	g++ -c main_bankaccount.cpp
+
+saving.o: saving.cpp
+	g++ -c saving.cpp
+
+loan.o: loan.cpp
+	g++ -c loan.cpp
+
+bankaccount.o: bankaccount.cpp
+	g++ -c bankaccount.cpp
+
+clean:
+	rm -f *o bankaccount
