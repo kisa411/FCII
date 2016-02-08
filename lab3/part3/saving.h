@@ -5,18 +5,16 @@
 #include "bankaccount.h"
 using namespace std;
 
-class Saving : public BankAccount { //inheritance
+class Saving { //inheritance
 
 public:
 	Saving(); //constructor
-	~Saving(); //destructor
 	void withdrawMoney( int amount ); //withdraw galleons
 	void depositMoney( int amount ); //deposit galleons
 	void printActivityLog(); //print out activity log based on a certain action
 
 private:
 	int withdraw, deposit; //amount of galleons to withdraw, amount of galleons to deposit (galleons will only be in integer values)
-	BankAccount* bankAccount;
 
 };
 

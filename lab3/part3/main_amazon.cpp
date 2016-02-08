@@ -1,8 +1,8 @@
 #include <iostream>
 #include <iomanip> //for formatting output
-#include "package2.h"
-#include "TwoDayPackage2.h"
-#include "overnight2.h"
+#include "package.h"
+#include "TwoDayPackage.h"
+#include "overnight.h"
 using namespace std;
 
 

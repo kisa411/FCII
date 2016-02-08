@@ -1,0 +1,19 @@
+all: amazon
+
+amazon: main_amazon2.o TwoDaypackage2.o overnight2.o package2.o
+	g++ main_amazon2.o TwoDaypackage2.o overnight2.o package2.o -o amazon
+
+main_amazon2.o: main_amazon2.cpp
+	g++ -c main_amazon2.cpp
+
+TwoDaypackage2.o: TwoDaypackage2.cpp
+	g++ -c TwoDaypackage2.cpp
+
+overnight2.o: overnight2.cpp
+	g++ -c overnight2.cpp
+
+package2.o: package2.cpp
+	g++ -c package2.cpp
+
+clean:
+	rm -f *o amazon
