@@ -135,7 +135,7 @@ int CardDeck::player() { //"deal" a card - using pop_back() on the deque & retur
 	cardDeque.pop_back(); //delete the last element
 	size--; 
 
-	i = i%13; //convert the number values to the playing card values
+	i = (i%12)+1; //convert the number values to the playing card values
 
 	if (i==1) { //is an ace
 		cout << "Ace(11)" << endl;
@@ -146,7 +146,7 @@ int CardDeck::player() { //"deal" a card - using pop_back() on the deque & retur
 	} else if (i==12) { //is a queen
 		cout << "Queen(10)" << endl;
 		i=10;
-	} else if (i==0) { //is a king
+	} else if (i==13) { //is a king
 		cout << "King(10)" << endl;
 		i=10;
 	}
@@ -161,7 +161,7 @@ int CardDeck::dealer() { //"deal" a card - using pop_back() on the deque & retur
 	cardDeque.pop_back(); //delete the last element
 	size--; 
 
-	i = i%13; //convert the number values to the playing card values
+	i = (i%12)+1; //convert the number values to the playing card values (1~12)
 
 	if (i==1) { //is an ace
 		//cout << "Ace(11)" << endl;
@@ -172,7 +172,7 @@ int CardDeck::dealer() { //"deal" a card - using pop_back() on the deque & retur
 	} else if (i==12) { //is a queen
 		//cout << "Queen(10)" << endl;
 		i=10;
-	} else if (i==0) { //is a king
+	} else if (i==13) { //is a king
 		//cout << "King(10)" << endl;
 		i=10;
 	}

@@ -34,7 +34,7 @@ void playBlackJack() {
 				cout << "Your total is: " << playerTotal << endl;
 				if ( playerTotal > 21 ) {
 					cout << "Sorry, your total went over 21. You lose!" << endl;
-					dealerWins++;
+					break;
 				}
 				size--; //decrease the number of cards in the deck by one
 			} 
@@ -42,20 +42,23 @@ void playBlackJack() {
 			if ( dealerPlay == 1 ) {
 				card = blackjack.dealer(); //give the dealer a card
 				dealerTotal += card;
+				cout << "The dealer total now is " << dealerTotal << endl;
 				size--;
 				cout << "The dealer has received a card." << endl;
 				if (dealerTotal >= 17 ) { //if the dealer's total reaches 17 or higher then they stop
 					dealerPlay = 0;
-					cout << "The dealer is no longer taking any cards." << endl;
+					//cout << "The dealer is no longer taking any cards." << endl;
 				} 
-			}
+			} 
 			cout << "Would you like to hit or stand? Please put either \"hit\" or \"stand\" " << endl;
 			cin >> hitorstand; 
 			if ( hitorstand == "stand" || hitorstand == "hit" ) {
-				if ( dealerPlay == 0 ) {
+				if ( dealerPlay == 0 && hitorstand == "stand" ) {
 					break; //if player stands and the dealer is also not taking any more cards, finish the game
+				} else if ( dealerPlay == 1 && hitorstand == "stand" ) {
+					continue; //if player stands but the dealer is taking more cards, then continue the game so that the dealer can take a card
 				}
-				continue; //if player stands but the dealer is taking more cards, then continue the game so that the dealer can take a card
+				continue; //if the player hits then continue the game
 			}
 			else {
 				cout << "Sorry, could not process input. Please put either \"hit\" or \"stand\" " << endl;
@@ -69,6 +72,7 @@ void playBlackJack() {
 			//if the deck goes below 15 cards, "open" a new deck
 			if ( choice == 1 ) {
 				blackjack.reset();
+				dealerPlay == 1; 
 				hitorstand = "hit";
 			} else if ( choice == 0 ) { //player does not want to play with a new deck
 				cout << "Another game will not be started." << endl;
@@ -76,15 +80,25 @@ void playBlackJack() {
 		}
 
 		//announce the results of this round
-		if ( playerTotal > dealerTotal && playerTotal <= 21 ) {
-			cout << "The player has won this round. Congratulations!" << endl;
+		if ( playerTotal > dealerTotal ) {
+			if ( playerTotal <= 21 ) { 
+				cout << "The player has won this round. Congratulations!" << endl;
+				playerWins++;
+			} else { 
+				cout << "Sorry, the dealer won this round." << endl; 
+				dealerWins++;
+			}
 			cout << "You had: " << playerTotal << " and the dealer had: " << dealerTotal << endl << endl;
-			playerWins++;
 			choice = 1; //this starts a new game 
-		} else if ( dealerTotal > playerTotal && dealerTotal <= 21 ) {
-			cout << "The dealer has won this round. The dealer's total was: " << dealerTotal << endl;
+		} else if ( dealerTotal > playerTotal ) {
+			if ( dealerTotal <= 21 ) {
+				cout << "The dealer has won this round. The dealer's total was: " << dealerTotal << endl;
+				dealerWins++;
+			} else {
+				cout << "The player has won this round! Congratulations!" << endl;
+				playerWins++;
+			}
 			cout << "You had: " << playerTotal << " and the dealer had: " << dealerTotal << endl << endl;
-			dealerWins++;
 			choice = 1; //this starts a new game
 		} else if ( playerTotal == dealerTotal ) {
 			cout << "This round was a tie. The totals for both the player and the dealer were: " << playerTotal << endl;
@@ -93,6 +107,8 @@ void playBlackJack() {
 		}
 
 		cout << "If you would like to quit playing blackjack, then please put '0'. If you would like to continue playing then please put '1'." << endl;
+		hitorstand = "hit";
+		dealerPlay = 1;
 		cin >> choice; //if 1, then a new game of blackjack will be started. If 0, then the game will end. 
 	}
 
@@ -102,7 +118,7 @@ void playBlackJack() {
 
 int main () {
 	
-	srand( time(NULL) ); //changes the seed number for the shuffle randomly - using time() allows for really random numbers since now the numbers coming out of the srand() function are based off the time 
+	srand( time(0) ); //changes the seed number for the shuffle randomly - using time() allows for really random numbers since now the numbers coming out of the srand() function are based off the time 
 
 	CardDeck deck1(10); //instantiate an object of class cardDeck
 
@@ -141,4 +157,8 @@ int main () {
 
 	return 0;
 }
+
+
+
+
 
