@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <cstring>
-#include "puzzle.h"
+#include "puzzleSolver.h"
 
 using namespace std;
 
@@ -33,22 +33,15 @@ int main ( int argc, char *argv[] ) { //read in the name of the file from comman
 
 	}
 
-	cout << "Is the puzzle for a sudoku or a wordoku?\n 1. Sudoku \n 2. Wordoku \n " << endl;
-	cin >> type;
 	
 
 	if ( checked == 1 ) {
-		if ( type == 1 ) {//instantiate puzzle object - sudoku object
-			Puzzle<int> sudoku( file );
-			sudoku.playPuzzle();
-			loop = 0;
-		} else if ( type == 2 ) { //instantiate puzzle object - wordoku object
-			Puzzle<char> wordoku( file );
-			wordoku.playPuzzle();
-			loop = 0;
-		}
+		// cout << "checked" << endl;
+		PuzzleSolver<int> sudoku( file ); //make the sudoku puzzle
+		sudoku.solvePuzzle(); //solve and display the puzzle
 	}
 
 
 	return 0;
 }
+

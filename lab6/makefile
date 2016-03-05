@@ -1,10 +1,10 @@
-all: puzzle
+all: puzzleSolver
 
-puzzle: main.o 
-	g++ main.o -o puzzle
+puzzleSolver: main.o 
+	g++ main.o -o puzzleSolver
 
-main.o: main.cpp puzzle.h
+main.o: main.cpp puzzleSolver.h
 	g++ -c main.cpp
 
 clean:
-	rm -f *o puzzle
+	rm -f *o puzzleSolver
