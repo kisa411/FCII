@@ -1,0 +1,11 @@
+all: binaryTree
+
+binaryTree: main_tree.o 
+	g++ main_tree.o -o binaryTree
+
+main_tree.o: main_tree.cpp binaryTree.h Node.h LinkedList.h
+	g++ -c main_tree.cpp
+
+clean:
+	rm *o binaryTree
+

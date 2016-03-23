@@ -5,6 +5,7 @@
 #include <ctime> //for time() function
 #include <cstdlib> //for srand() function
 #include "cardDeck.h"
+#include "NDvector.h"
 
 using namespace std;
 
@@ -182,7 +183,9 @@ int CardDeck::dealer() { //"deal" a card - using pop_back() on the deque & retur
 
 void CardDeck::reset() { //clean up the old deck and then create a new deck
 	
-	cardDeque.erase(cardDeque.begin(), cardDeque.end()); //erase all the elements in the deque
+	// cardDeque.erase(cardDeque.begin(), cardDeque.end()); //erase all the elements in the deque
+	
+	cardDeque.clear(); 
 
 	for( int i=0; i<52; i++ ) {
 		cardDeque.push_back(i); //put integers in the deque

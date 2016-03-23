@@ -1,0 +1,14 @@
+all: NDvector
+
+NDvector: main_vector.o CardDeck.o
+	g++ main_vector.o CardDeck.o -o NDvector
+
+CardDeck.o: cardDeck.cpp cardDeck.h
+	g++ -c cardDeck.cpp
+
+main_vector.o: main_vector.cpp NDvector.h
+	g++ -c main_vector.cpp
+
+clean:
+	rm *o NDvector
+
