@@ -3,7 +3,7 @@ all: binaryTree
 binaryTree: main_tree.o 
 	g++ main_tree.o -o binaryTree
 
-main_tree.o: main_tree.cpp binaryTree.h Node.h LinkedList.h
+main_tree.o: main_tree.cpp binaryTree.h Node.h 
 	g++ -c main_tree.cpp
 
 clean:

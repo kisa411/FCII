@@ -1,0 +1,16 @@
+1 Arcanine
+2 Snorlax
+3 Venusaur
+4 Alakazam
+5 Gengar
+6 Charizard
+7 Thyphlosion
+8 Wartotle
+9 Dewgong
+10 Caterpie
+11 Lapras
+12 Butterfree
+13 Pidgey
+14 Raticate
+15 Ninetails
+
