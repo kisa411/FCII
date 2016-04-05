@@ -27,6 +27,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		523F23701CB1A7CC002E73FD /* SDL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDL.h; sourceTree = "<group>"; };
 		52AA97D91C97467800FE5886 /* SDL_tutorial */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDL_tutorial; sourceTree = BUILT_PRODUCTS_DIR; };
 		52AA97DC1C97467800FE5886 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		52AA97E31C9746B900FE5886 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
@@ -96,6 +97,7 @@
 				52D9AE561C9F44E8006FC163 /* event_driven_programming.cpp */,
 				52D9AE681C9F607B006FC163 /* movePlayer.cpp */,
 				52D9AE6D1C9F692C006FC163 /* alphabetPuzzle.cpp */,
+				523F23701CB1A7CC002E73FD /* SDL.h */,
 			);
 			path = SDL_tutorial;
 			sourceTree = "<group>";

@@ -1,18 +1,21 @@
 //
-//  alphabetPuzzle.cpp
+//  SDL.cpp
+//  FinalProject
 //
-//  Created by Emily Koh on 3/20/16.
+//  Created by Emily Koh on 4/3/16.
 //  Copyright © 2016 Emily Koh. All rights reserved.
 //
 
-//Using SDL, SDL_image, SDL_ttf, standard IO, strings, and string streams
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 #include <SDL2_ttf/SDL_ttf.h>
 #include <stdio.h>
 #include <string>
+#include <iostream>
 #include <sstream>
 #include "SDL.h"
+
+using namespace std;
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -33,9 +36,8 @@ SDL_Surface* gPNGSurface = NULL;
 //Loads individual image
 SDL_Surface* loadSurface( std::string path );
 
-bool init()
+bool SDL::init()
 {
-
     //Initialization flag
     bool success = true;
     
@@ -47,6 +49,12 @@ bool init()
     }
     else
     {
+        //Set texture filtering to linear
+        if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) )
+        {
+            printf( "Warning: Linear texture filtering not enabled!" );
+        }
+        
         //Create window
         gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
         if( gWindow == NULL )
@@ -56,52 +64,92 @@ bool init()
         }
         else
         {
-            //Initialize PNG loading - create an image flag for the alphabet puzzle picture
-            int imgFlags = IMG_INIT_PNG;
-            if( !( IMG_Init( imgFlags ) & imgFlags ) )
+            //Create vsynced renderer for window
+            gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+            if( gRenderer == NULL )
             {
-                printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+                printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
                 success = false;
             }
             else
             {
-                //Get window surface
-                gScreenSurface = SDL_GetWindowSurface( gWindow );
+                //Initialize renderer color
+                SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+                
+                //Initialize PNG loading
+                int imgFlags = IMG_INIT_PNG;
+                if( !( IMG_Init( imgFlags ) & imgFlags ) )
+                {
+                    printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+                    success = false;
+                }
+                
+                //Initialize SDL_ttf
+                if( TTF_Init() == -1 )
+                {
+                    printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+                    success = false;
+                }
             }
         }
     }
     
     return success;
-
 }
-
-bool loadMedia() //load the alphabet puzzle picture
+bool SDL::loadMedia( string filename ) //load picture
 {
     //Loading success flag
     bool success = true;
     
     //Load PNG surface
-    gPNGSurface = loadSurface( "alphabetpuzzle.png" );
+    gPNGSurface = loadSurface( filename );
     if( gPNGSurface == NULL )
     {
         printf( "Failed to load PNG image!\n" );
         success = false;
     }
     
+    //Open the font
+    gFont = TTF_OpenFont( "32_text_input_and_clipboard_handling/lazy.ttf", 28 );
+    if( gFont == NULL )
+    {
+        printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
+        success = false;
+    }
+    else
+    {
+        //Render the prompt
+        SDL_Color textColor = { 0, 0, 0, 0xFF };
+        if( !gPromptTextTexture.loadFromRenderedText( "Enter Text:", textColor ) )
+        {
+            printf( "Failed to render prompt text!\n" );
+            success = false;
+        }
+    }
+
+    
     return success;
 }
 
-void close()
+
+void SDL::close()
 {
-    //Free loaded image
-    SDL_FreeSurface( gPNGSurface );
-    gPNGSurface = NULL;
+    //Free loaded images
+    gPromptTextTexture.free();
+    gInputTextTexture.free();
+    
+    //Free global font
+    TTF_CloseFont( gFont );
+    gFont = NULL;
     
     //Destroy window
+    SDL_DestroyRenderer( gRenderer );
     SDL_DestroyWindow( gWindow );
     gWindow = NULL;
+    gRenderer = NULL;
     
     //Quit SDL subsystems
+    TTF_Quit();
     IMG_Quit();
     SDL_Quit();
 }
@@ -131,58 +179,4 @@ SDL_Surface* loadSurface( std::string path )
     }
     
     return optimizedSurface;
-}
-
-int main( int argc, char* args[] )
-{
-    //Start up SDL and create window
-    if( !init() )
-    {
-        printf( "Failed to initialize!\n" );
-    }
-    else
-    {
-        //Load media
-        if( !loadMedia() )
-        {
-            printf( "Failed to load media!\n" );
-        }
-        else
-        {
-            //Main loop flag
-            bool quit = false;
-            
-            //Event handler
-            SDL_Event e;
-            
-            //While application is running
-            while( !quit )
-            {
-                //Handle events on queue
-                while( SDL_PollEvent( &e ) != 0 )
-                {
-                    //User requests quit
-                    if( e.type == SDL_QUIT )
-                    {
-                        quit = true;
-                    }
-                }
-                //Apply the image stretched, then apply the PNG image
-                SDL_Rect stretchRect;
-                stretchRect.x = 0;
-                stretchRect.y = 0;
-                stretchRect.w = SCREEN_WIDTH;
-                stretchRect.h = SCREEN_HEIGHT;
-                SDL_BlitScaled( gPNGSurface, NULL, gScreenSurface, &stretchRect ); //update the size of the picture so that it fits on the window screen
-                
-                //Update the surface
-                SDL_UpdateWindowSurface( gWindow );
-            }
-        }
-    }
-    
-    //Free resources and close SDL
-    close();
-    
-    return 0;
 }
