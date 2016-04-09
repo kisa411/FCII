@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		520B948D1CA9C5240087EB5A /* alphabetPuzzle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52D9AE6D1C9F692C006FC163 /* alphabetPuzzle.cpp */; };
+		5205FE5A1CB6F64C00D729C5 /* movePlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52D9AE681C9F607B006FC163 /* movePlayer.cpp */; };
 		52AA97E41C9746B900FE5886 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52AA97E31C9746B900FE5886 /* SDL2.framework */; };
 		52AA97E81C97555B00FE5886 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52AA97E71C97555B00FE5886 /* SDL2_image.framework */; };
 		52D9AE611C9F58E2006FC163 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D9AE601C9F58E2006FC163 /* SDL2_mixer.framework */; };
@@ -158,7 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				520B948D1CA9C5240087EB5A /* alphabetPuzzle.cpp in Sources */,
+				5205FE5A1CB6F64C00D729C5 /* movePlayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

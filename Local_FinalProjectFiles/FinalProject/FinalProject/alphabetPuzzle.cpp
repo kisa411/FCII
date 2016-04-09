@@ -19,9 +19,11 @@
 #include <iostream>
 #include <sstream>
 #include "alphabetPuzzle.h"
-#include "SDL.h"
+#include "sdl_win_wrap.h"
+#include "texture.h"
 
 using namespace std;
+
 
 
 AlphabetPuzzle::AlphabetPuzzle() { //default constructor
@@ -30,7 +32,24 @@ AlphabetPuzzle::AlphabetPuzzle() { //default constructor
 
 void AlphabetPuzzle::displayPuzzle() {
     
-    cout << "Hey! I'm the gate-keeper of Math Town and if you want to leave the town you have to be able to solve this puzzle. You have three tries to solve this puzzle!\nAre you ready? Here goes!" << endl;
+    //Open the font
+    gFont = TTF_OpenFont( "AmaticSC-Regular.ttf", 28 );
+    if( gFont == NULL )
+    {
+        printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
+        success = false;
+    }
+    else
+    {
+        //Render text
+        SDL_Color textColor = { 0, 0, 0 };
+        if( !gTextTexture.loadFromRenderedText( "Hey! I'm the gate-keeper of Math Town and if you want to leave the town you have to be able to solve this puzzle. You have three tries to solve this puzzle!\nAre you ready? Here goes!", textColor ) )
+        {
+            printf( "Failed to render text texture!\n" );
+            success = false;
+        }
+    }
+
     //SDL code for displaying puzzle image - TODO
     
 }
@@ -74,122 +93,42 @@ int AlphabetPuzzle::playPuzzle() { //returns the amount of points player should 
     
 }
 
-
-//Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-
-//The window we'll be rendering to - create pointer for window, but set to null for now
-SDL_Window* gWindow = NULL;
-
-//The surface contained by the window - create pointer for surface, but set to null for now
-SDL_Surface* gScreenSurface = NULL;
-
-//The image we will load and show on the screen - create pointer for surface, but set to null for now
-SDL_Surface* gHelloWorld = NULL;
-
-//Current displayed PNG image
-SDL_Surface* gPNGSurface = NULL;
-
-//Loads individual image
-SDL_Surface* loadSurface( std::string path );
-
-bool AlphabetPuzzle::init()
+bool AlphabetPuzzle::loadMedia()
 {
     
-    //Initialization flag
-    bool success = true;
-    
-    //Initialize SDL
-    if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-    {
-        printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
-        success = false;
-    }
-    else
-    {
-        //Create window
-        gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-        if( gWindow == NULL )
-        {
-            printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
-            success = false;
-        }
-        else
-        {
-            //Initialize PNG loading - create an image flag for the alphabet puzzle picture
-            int imgFlags = IMG_INIT_PNG;
-            if( !( IMG_Init( imgFlags ) & imgFlags ) )
-            {
-                printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
-                success = false;
-            }
-            else
-            {
-                //Get window surface
-                gScreenSurface = SDL_GetWindowSurface( gWindow );
-            }
-        }
-    }
-    
-    return success;
-    
-}
-
-bool AlphabetPuzzle::loadMedia( string filename ) //load picture
-{
     //Loading success flag
     bool success = true;
     
-    //Load PNG surface
-    gPNGSurface = loadSurface( filename );
-    if( gPNGSurface == NULL )
+//    //Load sprite sheet texture
+//    if( !gSpriteSheetTexture.loadFromFile( "numbers.png" ) )
+//    {
+//        printf( "Failed to load sprite sheet texture!\n" );
+//        success = false;
+//    }
+//    else
+//    {
+//        //Make Sprite clips from spriteSheet
+//        for(int i = 0; i < 10; i++)
+//        {
+//            gSpriteClips[i].x = startx + width*i + 4*i;
+//            gSpriteClips[i].y = starty;
+//            gSpriteClips[i].w = width;
+//            gSpriteClips[i].h = height;
+//        }
+//    }
+    
+    if( !gBackgroundTexture.loadFromFile( "sudoku_background.png" ))
     {
-        printf( "Failed to load PNG image!\n" );
+        printf( "Failed to load sprite sheet texture!\n" );
+        success = false;
+    }
+    
+    if( !(gSelectorTexture.loadFromFile("selector.png")))
+    {
+        printf("Failed to load selector\n");
         success = false;
     }
     
     return success;
 }
 
-void AlphabetPuzzle::close()
-{
-    //Free loaded image
-    SDL_FreeSurface( gPNGSurface );
-    gPNGSurface = NULL;
-    
-    //Destroy window
-    SDL_DestroyWindow( gWindow );
-    gWindow = NULL;
-    
-    //Quit SDL subsystems
-    IMG_Quit();
-    SDL_Quit();
-}
-
-SDL_Surface* loadSurface( std::string path )
-{
-    //The final optimized image
-    SDL_Surface* optimizedSurface = NULL;
-    
-    //Load image at specified path
-    SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
-    if( loadedSurface == NULL )
-    {
-        printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
-    }
-    else
-    {
-        //Convert surface to screen format
-        optimizedSurface = SDL_ConvertSurface( loadedSurface, gScreenSurface->format, NULL );
-        if( optimizedSurface == NULL )
-        {
-            printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
-        }
-        
-        //Get rid of old loaded surface
-        SDL_FreeSurface( loadedSurface );
-    }
-    
-    return optimizedSurface;
-}

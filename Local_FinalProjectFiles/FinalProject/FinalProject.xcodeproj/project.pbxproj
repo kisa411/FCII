@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5205FE721CB9948500D729C5 /* sdl_win_wrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5205FE6E1CB9948500D729C5 /* sdl_win_wrap.cpp */; };
+		5205FE731CB9948500D729C5 /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5205FE701CB9948500D729C5 /* texture.cpp */; };
 		523F238C1CB1A8FE002E73FD /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523F23881CB1A8FE002E73FD /* SDL2_image.framework */; };
 		523F238D1CB1A8FE002E73FD /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523F23891CB1A8FE002E73FD /* SDL2_mixer.framework */; };
 		523F238E1CB1A8FE002E73FD /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523F238A1CB1A8FE002E73FD /* SDL2_ttf.framework */; };
 		523F238F1CB1A8FE002E73FD /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523F238B1CB1A8FE002E73FD /* SDL2.framework */; };
-		523F23921CB1AAD8002E73FD /* main_alphabet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 523F23901CB1AAD8002E73FD /* main_alphabet.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,8 +28,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5205FE6E1CB9948500D729C5 /* sdl_win_wrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sdl_win_wrap.cpp; path = "../../../FinalProject/CSE20212-FinalProject/sudokuGraphic/sdl_win_wrap.cpp"; sourceTree = "<group>"; };
+		5205FE6F1CB9948500D729C5 /* sdl_win_wrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdl_win_wrap.h; path = "../../../FinalProject/CSE20212-FinalProject/sudokuGraphic/sdl_win_wrap.h"; sourceTree = "<group>"; };
+		5205FE701CB9948500D729C5 /* texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = texture.cpp; path = "../../../FinalProject/CSE20212-FinalProject/sudokuGraphic/texture.cpp"; sourceTree = "<group>"; };
+		5205FE711CB9948500D729C5 /* texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = texture.h; path = "../../../FinalProject/CSE20212-FinalProject/sudokuGraphic/texture.h"; sourceTree = "<group>"; };
 		523F237A1CB1A883002E73FD /* FinalProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FinalProject; sourceTree = BUILT_PRODUCTS_DIR; };
-		523F23841CB1A899002E73FD /* SDL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDL.h; sourceTree = "<group>"; };
 		523F23851CB1A8A1002E73FD /* alphabetPuzzle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = alphabetPuzzle.cpp; sourceTree = "<group>"; };
 		523F23871CB1A8CB002E73FD /* alphabetPuzzle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = alphabetPuzzle.h; sourceTree = "<group>"; };
 		523F23881CB1A8FE002E73FD /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
@@ -36,9 +40,6 @@
 		523F238A1CB1A8FE002E73FD /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_ttf.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2_ttf.framework; sourceTree = "<group>"; };
 		523F238B1CB1A8FE002E73FD /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		523F23901CB1AAD8002E73FD /* main_alphabet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main_alphabet.cpp; sourceTree = "<group>"; };
-		523F23931CB1AB16002E73FD /* SDL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDL.cpp; sourceTree = "<group>"; };
-		523F23961CB1B0E9002E73FD /* texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture.cpp; sourceTree = "<group>"; };
-		523F23971CB1B0E9002E73FD /* texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = texture.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,13 +80,13 @@
 		523F237C1CB1A883002E73FD /* FinalProject */ = {
 			isa = PBXGroup;
 			children = (
-				523F23841CB1A899002E73FD /* SDL.h */,
-				523F23931CB1AB16002E73FD /* SDL.cpp */,
 				523F23871CB1A8CB002E73FD /* alphabetPuzzle.h */,
 				523F23851CB1A8A1002E73FD /* alphabetPuzzle.cpp */,
 				523F23901CB1AAD8002E73FD /* main_alphabet.cpp */,
-				523F23961CB1B0E9002E73FD /* texture.cpp */,
-				523F23971CB1B0E9002E73FD /* texture.hpp */,
+				5205FE6E1CB9948500D729C5 /* sdl_win_wrap.cpp */,
+				5205FE6F1CB9948500D729C5 /* sdl_win_wrap.h */,
+				5205FE701CB9948500D729C5 /* texture.cpp */,
+				5205FE711CB9948500D729C5 /* texture.h */,
 			);
 			path = FinalProject;
 			sourceTree = "<group>";
@@ -146,7 +147,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				523F23921CB1AAD8002E73FD /* main_alphabet.cpp in Sources */,
+				5205FE731CB9948500D729C5 /* texture.cpp in Sources */,
+				5205FE721CB9948500D729C5 /* sdl_win_wrap.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

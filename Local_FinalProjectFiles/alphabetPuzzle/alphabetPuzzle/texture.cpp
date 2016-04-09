@@ -1,53 +1,17 @@
-
 //
 //  texture.cpp
-//  FinalProject
+//  alphabetPuzzle
 //
-//  Created by Emily Koh on 4/3/16.
+//  Created by Emily Koh on 4/9/16.
 //  Copyright © 2016 Emily Koh. All rights reserved.
 //
 
-//Using SDL, SDL_image, SDL_ttf, standard IO, strings, and string streams
-#include <SDL2/SDL.h>
-#include <SDL2_image/SDL_image.h>
-#include <SDL2_ttf/SDL_ttf.h>
-#include <stdio.h>
-#include <string>
-#include <sstream>
 #include "texture.hpp"
 
 
-
-//The window we'll be rendering to
-SDL_Window* gWindow = NULL;
-
-//The window renderer
-SDL_Renderer* gRenderer = NULL;
-
-//Globally used font
-TTF_Font *gFont = NULL;
-
-//Scene textures
-LTexture gPromptTextTexture;
-LTexture gInputTextTexture;
-
-
-LTexture::LTexture()
+bool LTexture::loadFromFile(string path)
 {
-    //Initialize
-    mTexture = NULL;
-    mWidth = 0;
-    mHeight = 0;
-}
-
-LTexture::~LTexture()
-{
-    //Deallocate
-    free();
-}
-
-bool LTexture::loadFromFile( std::string path )
-{
+    bool success;
     //Get rid of preexisting texture
     free();
     
@@ -84,11 +48,12 @@ bool LTexture::loadFromFile( std::string path )
     
     //Return success
     mTexture = newTexture;
-    return mTexture != NULL;
+    success = (mTexture != NULL);
+    return success;
 }
 
 #ifdef _SDL_TTF_H
-bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColor )
+bool LTexture::loadFromRenderedText( string textureText, SDL_Color textColor )
 {
     //Get rid of preexisting texture
     free();
@@ -134,41 +99,86 @@ void LTexture::free()
         mWidth = 0;
         mHeight = 0;
     }
+    if(gFont != NULL)
+    {
+        TTF_CloseFont( gFont );
+    }
 }
 
-void LTexture::setColor( Uint8 red, Uint8 green, Uint8 blue )
-{
-    //Modulate texture rgb
-    SDL_SetTextureColorMod( mTexture, red, green, blue );
-}
 
-void LTexture::setBlendMode( SDL_BlendMode blending )
-{
-    //Set blending function
-    SDL_SetTextureBlendMode( mTexture, blending );
-}
-
-void LTexture::setAlpha( Uint8 alpha )
-{
-    //Modulate texture alpha
-    SDL_SetTextureAlphaMod( mTexture, alpha );
-}
-
-void LTexture::render( int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip )
+void LTexture::render( int x, int y, double wprop, double hprop, SDL_Rect* clip ) // Alters image by given proportions
 {
     //Set rendering space and render to screen
-    SDL_Rect renderQuad = { x, y, mWidth, mHeight };
-    
-    //Set clip rendering dimensions
-    if( clip != NULL )
+    SDL_Rect renderQuad;
+    if(clip == NULL)
     {
+        renderQuad.x  = x;
+        renderQuad.y = y;
+        renderQuad.w = mWidth*wprop;
+        renderQuad.h = mHeight*hprop;
+    }
+    else
+    {
+        renderQuad.x  = x;
+        renderQuad.y = y;
+        renderQuad.w = (clip->w)*wprop;
+        renderQuad.h = (clip->h)*hprop;
+    }
+    //Render to screen
+    SDL_RenderCopy( gRenderer, mTexture, clip, &renderQuad );
+}
+
+void LTexture::render( int x, int y, SDL_Rect* clip ) // Renders clip of image in original size
+{
+    SDL_Rect renderQuad;
+    //Set rendering space and render to screen
+    if(clip == NULL)
+    {
+        renderQuad.x  = x;
+        renderQuad.y = y;
+        renderQuad.w = mWidth;
+        renderQuad.h = mHeight;
+    }
+    else
+    {
+        renderQuad.x  = x;
+        renderQuad.y = y;
         renderQuad.w = clip->w;
         renderQuad.h = clip->h;
     }
     
     //Render to screen
-    SDL_RenderCopyEx( gRenderer, mTexture, clip, &renderQuad, angle, center, flip );
+    SDL_RenderCopy( gRenderer, mTexture, clip, &renderQuad );
 }
+
+void LTexture::render( int x, int y, int width, int height, SDL_Rect* clip ) // Renders image in exact given size
+{
+    //Set rendering space and render to screen
+    SDL_Rect renderQuad = { x, y, width, height };
+    
+    //Render to screen
+    SDL_RenderCopy( gRenderer, mTexture, clip, &renderQuad );
+}
+
+
+LTexture::LTexture(SDL_Window *ngWindow, SDL_Renderer *ngRenderer, TTF_Font* ngFont):
+gFont(ngFont)
+{
+    //Initialize
+    SDL_GetWindowSize(ngWindow, &SCREEN_WIDTH, &SCREEN_HEIGHT);
+    mTexture = NULL;
+    mWidth = 0;
+    mHeight = 0;
+    gRenderer = ngRenderer;
+    gWindow = ngWindow;
+}
+
+LTexture::~LTexture()
+{
+    //Deallocate
+    free();
+}
+
 
 int LTexture::getWidth()
 {
@@ -179,6 +189,3 @@ int LTexture::getHeight()
 {
     return mHeight;
 }
-
-
-
