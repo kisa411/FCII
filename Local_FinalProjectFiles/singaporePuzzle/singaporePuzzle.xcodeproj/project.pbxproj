@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		5205FEC41CB9C1F500D729C5 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5205FEC31CB9C1F500D729C5 /* main.cpp */; };
+		5205FECC1CB9C24500D729C5 /* sdl_win_wrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5205FECA1CB9C24500D729C5 /* sdl_win_wrap.cpp */; };
+		5205FECF1CB9C25000D729C5 /* texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5205FECD1CB9C25000D729C5 /* texture.cpp */; };
+		5205FED41CB9C28900D729C5 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5205FED01CB9C28900D729C5 /* SDL2_image.framework */; };
+		5205FED51CB9C28900D729C5 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5205FED11CB9C28900D729C5 /* SDL2_mixer.framework */; };
+		5205FED61CB9C28900D729C5 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5205FED21CB9C28900D729C5 /* SDL2_ttf.framework */; };
+		5205FED71CB9C28900D729C5 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5205FED31CB9C28900D729C5 /* SDL2.framework */; };
+		5205FEDA1CB9C2A300D729C5 /* singaporePuzzle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5205FED81CB9C2A300D729C5 /* singaporePuzzle.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +32,16 @@
 /* Begin PBXFileReference section */
 		5205FEC01CB9C1F500D729C5 /* singaporePuzzle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = singaporePuzzle; sourceTree = BUILT_PRODUCTS_DIR; };
 		5205FEC31CB9C1F500D729C5 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		5205FECA1CB9C24500D729C5 /* sdl_win_wrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdl_win_wrap.cpp; sourceTree = "<group>"; };
+		5205FECB1CB9C24500D729C5 /* sdl_win_wrap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sdl_win_wrap.hpp; sourceTree = "<group>"; };
+		5205FECD1CB9C25000D729C5 /* texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture.cpp; sourceTree = "<group>"; };
+		5205FECE1CB9C25000D729C5 /* texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = texture.hpp; sourceTree = "<group>"; };
+		5205FED01CB9C28900D729C5 /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
+		5205FED11CB9C28900D729C5 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_mixer.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2_mixer.framework; sourceTree = "<group>"; };
+		5205FED21CB9C28900D729C5 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_ttf.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2_ttf.framework; sourceTree = "<group>"; };
+		5205FED31CB9C28900D729C5 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		5205FED81CB9C2A300D729C5 /* singaporePuzzle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = singaporePuzzle.cpp; sourceTree = "<group>"; };
+		5205FED91CB9C2A300D729C5 /* singaporePuzzle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = singaporePuzzle.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +49,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5205FED41CB9C28900D729C5 /* SDL2_image.framework in Frameworks */,
+				5205FED51CB9C28900D729C5 /* SDL2_mixer.framework in Frameworks */,
+				5205FED61CB9C28900D729C5 /* SDL2_ttf.framework in Frameworks */,
+				5205FED71CB9C28900D729C5 /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +62,10 @@
 		5205FEB71CB9C1F500D729C5 = {
 			isa = PBXGroup;
 			children = (
+				5205FED01CB9C28900D729C5 /* SDL2_image.framework */,
+				5205FED11CB9C28900D729C5 /* SDL2_mixer.framework */,
+				5205FED21CB9C28900D729C5 /* SDL2_ttf.framework */,
+				5205FED31CB9C28900D729C5 /* SDL2.framework */,
 				5205FEC21CB9C1F500D729C5 /* singaporePuzzle */,
 				5205FEC11CB9C1F500D729C5 /* Products */,
 			);
@@ -58,6 +83,12 @@
 			isa = PBXGroup;
 			children = (
 				5205FEC31CB9C1F500D729C5 /* main.cpp */,
+				5205FECA1CB9C24500D729C5 /* sdl_win_wrap.cpp */,
+				5205FECB1CB9C24500D729C5 /* sdl_win_wrap.hpp */,
+				5205FECD1CB9C25000D729C5 /* texture.cpp */,
+				5205FECE1CB9C25000D729C5 /* texture.hpp */,
+				5205FED81CB9C2A300D729C5 /* singaporePuzzle.cpp */,
+				5205FED91CB9C2A300D729C5 /* singaporePuzzle.hpp */,
 			);
 			path = singaporePuzzle;
 			sourceTree = "<group>";
@@ -118,6 +149,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5205FECF1CB9C25000D729C5 /* texture.cpp in Sources */,
+				5205FECC1CB9C24500D729C5 /* sdl_win_wrap.cpp in Sources */,
+				5205FEDA1CB9C2A300D729C5 /* singaporePuzzle.cpp in Sources */,
 				5205FEC41CB9C1F500D729C5 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -207,6 +241,10 @@
 		5205FEC81CB9C1F500D729C5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -214,6 +252,10 @@
 		5205FEC91CB9C1F500D729C5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

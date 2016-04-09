@@ -1,6 +1,6 @@
 //
 //  main.cpp
-//  singaporePuzzle
+//  hangman
 //
 //  Created by Emily Koh on 4/9/16.
 //  Copyright © 2016 Emily Koh. All rights reserved.
@@ -13,16 +13,17 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include "singaporePuzzle.hpp"
+#include "hangman.hpp"
 #include "sdl_win_wrap.hpp"
 #include "texture.hpp"
+
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-   
     SDL_Win_Wrap window_instance; //SDL window object
     
-    SingaporeanPuzzle puzzle( window_instance.getWindow(), window_instance.getRenderer() ); //Singaporean Puzzle object
-    puzzle.displayPuzzle();
-    puzzle.playPuzzle();
+    Hangman game(window_instance.getWindow(), window_instance.getRenderer()); //instantiate new object of Hangman game
+    game.playPuzzle(); //play the game
+
+    return 0;
 }
