@@ -151,9 +151,9 @@ int playBlackJack() {
             printf( "Failed to render text texture!\n" );
         }
         
-        points-=50;
+        points-=100;
         return points;
-    } else {
+    } else if ( playerWins == dealerWins ) {
         if( !gTextTexture.loadFromRenderedText( "Seems like the game ended in a tie. You don't get any penalties or rewards - oh well! Could've been worse!\nThe dealer says: Come back again soon! :)\n", textColor ) ) {
             printf( "Failed to render text texture!\n" );
         }

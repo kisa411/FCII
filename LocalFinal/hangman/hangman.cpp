@@ -17,11 +17,17 @@
 #include <vector>
 using namespace std;
 
-Hangman::Hangman(SDL_Window* gWindow, SDL_Renderer* gRenderer ) : gTextTexture(gWindow, gRenderer), gBackgroundTexture(gWindow, gRenderer), gInputTextTexture(gWindow, gRenderer), gPromptTextTexture(gWindow, gRenderer) { //constructor
-    points = 300; //set default point value as 300, and for each category of guesses the player takes to solve the puzzle deduct 50 points - player gets 12 guesses for letters to get the word right
+Hangman::Hangman(SDL_Window* ngWindow, SDL_Renderer* ngRenderer ) : gTextTexture(ngWindow, ngRenderer), gBackgroundTexture(ngWindow, ngRenderer), gInputTextTexture(ngWindow, ngRenderer), gPromptTextTexture(ngWindow, ngRenderer), gWindow(ngWindow), gRenderer(ngRenderer) { //constructor
+    points = 0; //set default point value as 0
+    loadMedia();
+    SDL_GetWindowSize(gWindow, &SCREEN_WIDTH, &SCREEN_HEIGHT); //store the window dimensions
 }
 
+
 int Hangman::playPuzzle() { //play the puzzle
+    SDL_RenderClear( gRenderer );
+    //SDL code for displaying (rendering) puzzle image
+    gBackgroundTexture.render(0,0, SCREEN_WIDTH, SCREEN_HEIGHT, NULL);
     
     //Render text
     SDL_Color textColor = { 0, 0, 0 };
@@ -100,34 +106,21 @@ int Hangman::playPuzzle() { //play the puzzle
             printf( "Failed to render text texture!\n" );
         }
         
-        //no deduction in points
-        points = 300;
-        
-        //display picture
-        //TODO
+        points = 100;
         
     } else if ( guess>=9 && guess<11 && complete==true ) { //player receives raw fish (9~10)
         if( !gTextTexture.loadFromRenderedText( "Wow! You were able to solve the puzzle in less than 11 guesses! You were able to save the cat and the cat was pretty happy with you so he gave you a raw fish for your recipe!\n", textColor ) ) {
             printf( "Failed to render text texture!\n" );
         }
         
-        //50 point deduction in points
-        points = 250;
-        
-        //display picture
-        //TODO
+        points = 70;
         
     } else if ( guess>=11 && complete==true ) { //player receives fish bones (11~12)
         if( !gTextTexture.loadFromRenderedText( "Hm...well you were able to solve the puzzle in less than 13 guesses and were able to save the cat before he fell off the tree. The cat gave you some of his leftover fish bones partly because he was grateful but mostly out of relief that he hadn't fallen completely out of the tree.\n", textColor ) ) {
             printf( "Failed to render text texture!\n" );
         }
         
-        
-        //100 point deduction in points
-        points = 200;
-        
-        //display picture
-        //TODO
+        points = 40;
         
     } else {
         if( !gTextTexture.loadFromRenderedText( "You took so long in solving the puzzle the cat fell off the tree and was too angry to give you anything cool except for some scratches on your face. Sorry! :(\n", textColor ) ) {
@@ -147,14 +140,14 @@ bool Hangman::loadMedia() {
     bool success = true;
     
     //Open the background picture
-    if( !gBackgroundTexture.loadFromFile( "alphabetpuzzle.png" ))
+    if( !gBackgroundTexture.loadFromFile( "cat.png" ))
     {
         printf( "Failed to load background image texture!\n" );
         success = false;
     }
     
     //Open the font
-    gFont = TTF_OpenFont( "AmaticSC-Regular.ttf", 28 );
+    gFont = TTF_OpenFont( "AmaticSC-Regular.ttf", 18 );
     if( gFont == NULL )
     {
         printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -164,6 +157,7 @@ bool Hangman::loadMedia() {
     {
         //Render the prompt
         SDL_Color textColor = { 0, 0, 0, 0xFF };
+        gPromptTextTexture.setFont(gFont);
         if( !gPromptTextTexture.loadFromRenderedText( "Enter Text:", textColor ) )
         {
             printf( "Failed to render prompt text!\n" );

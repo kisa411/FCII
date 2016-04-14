@@ -12,25 +12,31 @@
 
 using namespace std;
 
-SingaporeanPuzzle::SingaporeanPuzzle( SDL_Window* gWindow, SDL_Renderer* gRenderer ) : gTextTexture(gWindow, gRenderer), gBackgroundTexture(gWindow, gRenderer), gInputTextTexture(gWindow, gRenderer), gPromptTextTexture(gWindow, gRenderer) { //default constructor
+SingaporeanPuzzle::SingaporeanPuzzle( SDL_Window* ngWindow, SDL_Renderer* ngRenderer ) : gTextTexture(ngWindow, ngRenderer), gBackgroundTexture(ngWindow, ngRenderer), gInputTextTexture(ngWindow, ngRenderer), gPromptTextTexture(ngWindow, ngRenderer), gWindow(ngWindow), gRenderer(ngRenderer) { //default constructor
     points = 0; //set initial value of points to be 0
+    loadMedia();
+    SDL_GetWindowSize(gWindow, &SCREEN_WIDTH, &SCREEN_HEIGHT); //store the window dimensions
+}
 }
 
 void SingaporeanPuzzle::displayPuzzle() {
     //this is the robber speaking
+    SDL_RenderClear( gRenderer );
+    //SDL code for displaying (rendering) puzzle image
+    gBackgroundTexture.render(0,0, SCREEN_WIDTH, SCREEN_HEIGHT, NULL);
+
     //Render text
     SDL_Color textColor = { 0, 0, 0 };
-    if( !gTextTexture.loadFromRenderedText( "Boo! Finally caught you! We've been after the yummy stuff in your bag for a while! If you want to escape from me without any conseqences then you need to be able to prove to me that you're smart enough to solve this brainteaser. If not, then I'm going to steal some of your ingredients! Are you ready? Here's the question!\n\n", textColor ) ) {
+    if( !gTextTexture.loadFromRenderedText( "Boo! Finally caught you! I've been after the yummy stuff in your basket for a while! If you want to escape from me without any conseqences then you need to be able to prove to me that you're smart enough to solve this brainteaser. If not, then I'm going to steal some of your ingredients! Are you ready? Here's the question!\n\n", textColor ) ) {
         printf( "Failed to render text texture!\n" );
     }
-//    cout << "Boo! Finally caught you! If you want to escape from me without any conseqences then you need to be able to prove to me that you're smart enough to solve this brainteaser. If not, then I'm going to steal some of your ingredients! Are you ready? Here's the question!" << endl << endl;
-    
+
     //brainteaser
     if( !gTextTexture.loadFromRenderedText( "**************************************************************************\nMy friends Emily and Borah want to know when Luis' birthday is. Luis gives them a list of 10 possible dates.\n\n", textColor ) ) {
         printf( "Failed to render text texture!\n" );
     }
     
-    if( !gTextTexture.loadFromRenderedText( "May 15, May 16, May 19\nJune 17, June 18\nJuly 14, July 16\nAugust 14, August 15, August 17\n", textColor ) ) {
+    if( !gTextTexture.loadFromRenderedText( "May 15, May 16, May 19, June 17, June 18, July 14, July 16, August 14, August 15, August 17\n", textColor ) ) {
         printf( "Failed to render text texture!\n" );
     }
     
@@ -67,12 +73,9 @@ int SingaporeanPuzzle::playPuzzle() { //returns the amount of points player shou
         if( !gTextTexture.loadFromRenderedText( "What is your answer?\nAnswer: ", textColor ) ) {
             printf( "Failed to render text texture!\n" );
         }
-//        cout << "What is your answer?" << endl;
-//        cout << "Answer: " << endl;
-        
-        
         cin >> answer;
         tryNumber++; //increment the number of tries user takes
+
         for ( int j=0; j<answer.length(); j++ ) {
             answer[j] = ::tolower(answer[j]); //make the answer lower-case
         }
@@ -82,42 +85,32 @@ int SingaporeanPuzzle::playPuzzle() { //returns the amount of points player shou
                 printf( "Failed to render text texture!\n" );
             }
 
-//            cout << "Congratulations! You got it correct!" << endl;
             complete = true;
             
             if ( tryNumber == 1 ) { //got the answer on the first try
                 if( !gTextTexture.loadFromRenderedText( "You got it correct on your first try, so I won't steal anything from you this time!", textColor ) ) {
                     printf( "Failed to render text texture!\n" );
                 }
-                
-//                cout << "You got it correct on your first try, so I won't steal anything from you this time!" << endl;
+                points+=100;
                 return points;
             } else if ( tryNumber == 2 ) { //got the answer on the second try
                 if( !gTextTexture.loadFromRenderedText( "You got it correct but on your second try - for wasting my time I'm going to take some stuff from you!\nOh no! The robber stole 30 points worth of ingredients from your bag!", textColor ) ) {
                     printf( "Failed to render text texture!\n" );
                 }
-                
-//                cout << "You got it correct but on your second try - for wasting my time I'm going to take some stuff from you!" << endl;
-//                cout << "Oh no! The robber stole 30 points worth of ingredients from your bag!" << endl;
-                points+=30;
+                points+=70;
                 return points;
             } else if ( tryNumber == 3 ) { //got the answer on the third try
                 if( !gTextTexture.loadFromRenderedText( "You got it correct but on your third try - for wasting my time I'm going to take some stuff from you!\nOh no! The robber stole 60 points worth of ingredients from your bag!\n", textColor ) ) {
                     printf( "Failed to render text texture!\n" );
                 }
-                
-//                cout << "You got it correct but on your third try - for wasting my time I'm going to take some stuff from you!" << endl;
-//                cout << "Oh no! The robber stole 60 points worth of ingredients from your bag!" << endl;
-                points+=60;
+                points+=40;
                 return points;
             } else { //if player is unable to solve the puzzle in 3 tries,
                 if( !gTextTexture.loadFromRenderedText( "But you took too long to come up with the correct answer! For wasting so much of my time I'm going to steal a lot of stuff from you!\nOh no! The robber stole 100 points worth of ingredients from your bag! You need to brush up on your logical thinking skills!", textColor ) ) {
                     printf( "Failed to render text texture!\n" );
                 }
                 
-//                cout << "But you took too long to come up with the correct answer! For wasting so much of my time I'm going to steal a lot of stuff from you!" << endl;
-//                cout << "Oh no! The robber stole 100 points worth of ingredients from your bag! You need to brush up on your logical thinking skills!" << endl;
-                points+=100;
+                points-=50;
                 return points;
             }
         } else {
@@ -125,7 +118,6 @@ int SingaporeanPuzzle::playPuzzle() { //returns the amount of points player shou
                 printf( "Failed to render text texture!\n" );
             }
             
-//            cout << "That's wrong, try again." << endl;
         }
     }
     
@@ -139,14 +131,14 @@ bool SingaporeanPuzzle::loadMedia() {
     bool success = true;
     
     //Open the background picture
-    if( !gBackgroundTexture.loadFromFile( "alphabetpuzzle.png" )) //need to change pictures to display
+    if( !gBackgroundTexture.loadFromFile( "singapore.png" )) //need to change pictures to display
     {
         printf( "Failed to load background image texture!\n" );
         success = false;
     }
     
     //Open the font
-    gFont = TTF_OpenFont( "AmaticSC-Regular.ttf", 28 );
+    gFont = TTF_OpenFont( "adamwarrenpro.ttf", 18 );
     if( gFont == NULL )
     {
         printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -156,6 +148,7 @@ bool SingaporeanPuzzle::loadMedia() {
     {
         //Render the prompt
         SDL_Color textColor = { 0, 0, 0, 0xFF };
+        gPromptTextTexture.setFont(gFont);
         if( !gPromptTextTexture.loadFromRenderedText( "Enter Text:", textColor ) )
         {
             printf( "Failed to render prompt text!\n" );
