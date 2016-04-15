@@ -77,16 +77,49 @@ void AlphabetPuzzle::displayTown() {
  
 }
 
-int AlphabetPuzzle::displayPuzzle() { //return amount of points player should get
+void AlphabetPuzzle::displayPuzzle() { //return amount of points player should get
+
+    bool success = true;
+
+    SDL_RenderClear( gRenderer );
+    //SDL code for displaying (rendering) puzzle image
+    gPuzzleTexture.render(0,0, SCREEN_WIDTH, SCREEN_HEIGHT, NULL);
+
+    // Update Screen
+    SDL_RenderPresent( gRenderer );
+ 
+}
+
+int AlphabetPuzzle::playPuzzle() {
+
+    int endPoints = 100;
+
+    while (complete==false) {
+        displayPuzzle();
+        endPoints = determineEnding(); //display the main background
+        if ( endPoints <= 0 ) {
+            complete = true;
+        }
+        // Update Screen
+        SDL_RenderPresent( gRenderer );
+
+    }
+
+    return endPoints;
+
+}
+
+int AlphabetPuzzle::determineEnding() {
     string answer;
     bool correct = false;
     int tryNumber=0;
-    int textXpos = SCREEN_WIDTH/5;
+    int textXpos = (2*SCREEN_WIDTH)/7;
     int textYpos = (3*SCREEN_HEIGHT)/4;
 
     //Loading success flag
     bool success = true;
-        
+    
+
     //Event handler
     SDL_Event e;
 
@@ -105,55 +138,49 @@ int AlphabetPuzzle::displayPuzzle() { //return amount of points player should ge
         tryNumber++;
         answer = userInput(); //returns user's input
         correct = validate(answer); //returns whether or not the input is right
+        cout << "Answer is not correct" << endl;
+        cout << "Answer given was: " << answer << endl;
         if (correct==true) {
+            cout << "The answer is correct" << endl;
             if( !gTextTexture.loadFromRenderedTextWrapped( "Congratulations! You got it correct!\n  ", textColor, 350 ) ) {
                 printf( "Failed to render text texture!\n" );
             }
-            gTextTexture.render(textXpos, textYpos);
+            for ( int i=0; i<1000; i++ ) { //display message for a while
+                SDL_RenderClear( gRenderer );
+                gTextTexture.render(textXpos, textYpos);
+                SDL_RenderPresent( gRenderer );
+                cout << "rendering congats message" << endl;
+            }
+
             if ( tryNumber == 1 ) { //got the answer on the first try
+                cout << "try number 1" << endl;
                 handleEvent( e, tryNumber );
                 return points;
             } else if ( tryNumber == 2 ) { //got the answer on the second try
+                cout << "try number 2" << endl;
                 handleEvent( e, tryNumber );
                 points-=30;
                 return points;
             } else if ( tryNumber == 3 ) { //got the answer on the third try
+                cout << "try number 3" << endl;
                 handleEvent( e, tryNumber );
                 points-=60;
                 return points;
             } else { //if player is unable to solve the puzzle in 3 tries
+                cout << "try number 4" << endl;
                 handleEvent( e, tryNumber );
                 points-=100;
                 return points;
             }
 
         } else if (correct==false) {
-            if( !gTextTexture.loadFromRenderedTextWrapped( "That's wrong, try again.\n  ", textColor, 350 ) ) {
+            if( !gTextTexture.loadFromRenderedTextWrapped( "That's wrong, Try again.\n  ", textColor, 350 ) ) {
                 printf( "Failed to render text texture!\n" );
             }
             gTextTexture.render(textXpos, textYpos);
         }
 
     }
-
-}
-
-int AlphabetPuzzle::playPuzzle() {
-
-    int endPoints;
-
-    while (complete==false) {
-        SDL_RenderClear( gRenderer );
-        //SDL code for displaying (rendering) puzzle image
-        gPuzzleTexture.render(0,0, SCREEN_WIDTH, SCREEN_HEIGHT, NULL);
-        endPoints = displayPuzzle(); //display the main background
-        // endPoints = userInput(); //check for user input
-        // Update Screen
-        SDL_RenderPresent( gRenderer );
-    }
-
-    return endPoints;
-
 }
 
 bool AlphabetPuzzle::handleEvent( SDL_Event &e, int tryNumber ) {
@@ -188,7 +215,7 @@ bool AlphabetPuzzle::handleEvent( SDL_Event &e, int tryNumber ) {
         else if ( e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP )
         {
             SDL_RenderClear( gRenderer ); //clear renderer 
-            //Actions depending on mouse click down or up (relese)
+            //Actions depending on mouse click down or up (release)
             switch( e.type )
             {
                 case SDL_MOUSEBUTTONDOWN:
@@ -196,14 +223,22 @@ bool AlphabetPuzzle::handleEvent( SDL_Event &e, int tryNumber ) {
                         if( !gTextTexture.loadFromRenderedTextWrapped( "The gatekeeper says: You got it correct on your first try, so you can leave the town for free!\n  ", textColor, 350 ) ) {
                             printf( "Failed to render text texture!\n" );
                         }
-                        gTextTexture.render(textXpos, textYpos);
+                        for ( int i=0; i<1000; i++ ) { //display message for a while
+                            SDL_RenderClear( gRenderer );
+                            gTextTexture.render(textXpos, textYpos);
+                            SDL_RenderPresent( gRenderer );
+                        }
                         complete = true;
                         break;
                     } else if (tryNumber==2) { //load text for second try
                         if( !gTextTexture.loadFromRenderedTextWrapped( "The gatekeeper says: You got it correct but on your second try, but I got hungry waiting for you to solve it so give me some of your food!\n Oh no! You are forced to share 30 points worth of ingredients from your bag.\n ", textColor, 350 ) ) {
                             printf( "Failed to render text texture!\n" );
                         }
-                        gTextTexture.render(textXpos, textYpos);
+                        for ( int i=0; i<1000; i++ ) { //display message for a while
+                            SDL_RenderClear( gRenderer );
+                            gTextTexture.render(textXpos, textYpos);
+                            SDL_RenderPresent( gRenderer );
+                        }
                         complete = true;
                         return complete;
                         break;
@@ -211,7 +246,11 @@ bool AlphabetPuzzle::handleEvent( SDL_Event &e, int tryNumber ) {
                         if( !gTextTexture.loadFromRenderedTextWrapped( "The gatekeeper says: You got it correct but on your third try, but I got hungry waiting for you to solve it so give me some of your food!\n Oh no! You are forced to share 60 points worth of ingredients from your bag.\n ", textColor, 350 ) ) {
                             printf( "Failed to render text texture!\n" );
                         }
-                        gTextTexture.render(textXpos, textYpos);
+                        for ( int i=0; i<1000; i++ ) { //display message for a while
+                            SDL_RenderClear( gRenderer );
+                            gTextTexture.render(textXpos, textYpos);
+                            SDL_RenderPresent( gRenderer );
+                        }
                         complete = true;
                         return complete;
                         break;
@@ -219,7 +258,11 @@ bool AlphabetPuzzle::handleEvent( SDL_Event &e, int tryNumber ) {
                         if( !gTextTexture.loadFromRenderedTextWrapped( "The gatekeeper says: You're taking too long to come up with the correct answer! For wasting so much of my time give me something yummy!\n Oh no! The gate-keeper ate 100 points worth of ingredients from your bag! At least you finally get to exit the Math Town.\n", textColor, 350 ) ) {
                             printf( "Failed to render text texture!\n" );
                         }
-                        gTextTexture.render(textXpos, textYpos);
+                        for ( int i=0; i<1000; i++ ) { //display message for a while
+                            SDL_RenderClear( gRenderer );
+                            gTextTexture.render(textXpos, textYpos);
+                            SDL_RenderPresent( gRenderer );
+                        }
                         complete = true;
                         return complete;
                         break;
@@ -278,11 +321,12 @@ bool AlphabetPuzzle::loadMedia() {
 
 string AlphabetPuzzle::userInput() {
 
-    int textXpos = (2*SCREEN_WIDTH)/5;
+    int textXpos = (2*SCREEN_WIDTH)/7;
     int textYpos = (3*SCREEN_HEIGHT)/4;
 
     //Main loop flag
     bool quit = false;
+    bool enter = false;
     bool success = true;
 
     //Event handler
@@ -304,7 +348,7 @@ string AlphabetPuzzle::userInput() {
     gPromptTextTexture.render(textXpos, textYpos); 
     
     //The current input text.
-    string inputText = "Put answer here";
+    string inputText = "Erase this and put answer here";
     gInputTextTexture.setFont(gFont);
     gInputTextTexture.loadFromRenderedText( inputText.c_str(), textColor );
 
@@ -312,7 +356,7 @@ string AlphabetPuzzle::userInput() {
     SDL_StartTextInput();
 
     //While application is running
-    while( !quit )
+    while( !enter )
     {
         //The rerender text flag
         bool renderText = false;
@@ -320,13 +364,8 @@ string AlphabetPuzzle::userInput() {
         //Handle events on queue
         while( SDL_PollEvent( &e ) != 0 )
         {
-            //User requests quit
-            if( e.type == SDL_QUIT )
-            {
-                quit = true;
-            }
             //Special key input
-            else if( e.type == SDL_KEYDOWN )
+            if( e.type == SDL_KEYDOWN )
             {
                 //Handle backspace
                 if( e.key.keysym.sym == SDLK_BACKSPACE && inputText.length() > 0 )
@@ -334,6 +373,11 @@ string AlphabetPuzzle::userInput() {
                     //lop off character
                     inputText.pop_back();
                     renderText = true;
+                } //Handle Return (enter)
+                else if ( e.key.keysym.sym == SDLK_RETURN ) 
+                {
+                    enter = true;
+                    break;
                 }
             }
             //Special text input event
@@ -388,10 +432,9 @@ string AlphabetPuzzle::userInput() {
 bool AlphabetPuzzle::validate( string userInput ) { //determines whether user input is correct or not
     bool correct = false;
 
-    int answer = 6;
-    int number = std::stoi(userInput);
+    string answer = "6";
 
-    if (number==answer) {
+    if (userInput==answer) {
         correct = true;
         return correct;
     }

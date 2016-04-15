@@ -19,8 +19,9 @@ public:
     AlphabetPuzzle( SDL_Window*, SDL_Renderer* ); //default constructor
     ~AlphabetPuzzle(); //destructor
     void displayTown(); //display the town
-    int displayPuzzle(); //display the puzzle picture
+    void displayPuzzle(); //display the puzzle picture
     int playPuzzle(); //main driver function for alphabet puzzle
+    int determineEnding(); //determing the results of the game
     
 private:
     int points; //depending on how many tries it took player to get right answer, points value changes

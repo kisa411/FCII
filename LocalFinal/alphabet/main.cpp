@@ -19,11 +19,16 @@
 using namespace std;
 
 int main () {
+	int points = 100;
     SDL_Win_Wrap window_instance; //SDL window object
     AlphabetPuzzle puzzle( window_instance.getWindow(), window_instance.getRenderer() ); //AlphabetPuzzle object
-    for ( int i=0; i<3000; i++ ) {
-    	puzzle.displayTown();
-    }
+    // for ( int i=0; i<3000; i++ ) {
+    // 	puzzle.displayTown();
+    // }
 
-    puzzle.playPuzzle();
+    while (points>0) {
+	    puzzle.displayPuzzle();
+	    points = puzzle.playPuzzle();
+	    cout << "Player's points: " << points << endl;
+	}
 }
