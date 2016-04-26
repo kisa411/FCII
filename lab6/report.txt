@@ -1,0 +1,61 @@
++4 Explains how the user uses the program.
+There are two parts to this lab: a sudoku puzzle generator and 
+a sudoku puzzle solver. There isn't really much 
+user-interaction in the sudoku-solver program except for the 
+file-reading in portion, since the point of the program is to 
+solve the sudoku puzzle it's provided with through the 
+user-input. However, for the sudoku puzzle generator there is 
+a lot of user interaction since the user is responsible for 
+putting in the correct values to complete the sudoku puzzle. 
+
++6 Explains how the program works internally.
+Internally, the sudoku puzzle generator reads in all the 
+characters from the given file and then stores the default 
+values' positions. Once the positions are all stored, the 
+puzzle is displayed to the user to allow for input and if the 
+user's input passes all the right checks (row, column, 
+mini-grid), then the value is inserted. Afterwards the puzzle 
+is checked for completeness and correctness. 
+
+The sudoku puzzle solver reads in all the characters from the 
+given file and then stores the default values' positions. Once 
+this step is done, it goes on to use the single possibility 
+algorithm and singleton algorithm to complete the puzzle. The 
+single possibility algorithm basically goes through each row 
+and column and if there's only one value that can be placed in 
+a spot, it places it there. The singleton algorithm checks 
+itself against other spots in the same row or column and if, 
+by process of elimination, only one value can be placed in its 
+current spot, then it goes ahead and places it in the spot.
+
++5 Explains how the program was verified.
+The program was tested against the easy and medium puzzles, 
+which it was able to solve both accurately. There were some 
+bugs with the code initially, especially since I was 
+converting all the inputs from human-generated (eg. row = 1, 
+column = 1) to machine-generated (eg. row = 0, column = 0), so 
+I had to change a lot of the implementation of some of the 
+checking functions.
+
++5 Text on what you think worked well, what did not work, and 
+a general summary of the “how”
+the solver was implemented. This is effectively more detail 
+than usual on how the program
+works, but from the programmer perspective.
+The program contains a lot of for-loops and while-loops that 
+considerably reduce the running time. When I first tried 
+solving the easy puzzle with just the single possibility 
+algorithm, it was extremely slow and for a while I thought 
+that there was an infinite loop somewhere because it was 
+taking such a long time to solve the puzzle. Once I added the 
+singleton algorithm it ran faster, but I still feel like the 
+program overall is pretty slow. Also for the medium and hard puzzles the program has difficulty solving them so I'm pretty sure there's bugs in 
+the code. 
+
+
+
+Updates:
+
+I was able to successfully implement the singleton method in the redo, and the thing
+that helped the most was having more time to work on the lab and also talking about
+the singleton design in class during lecture. 
